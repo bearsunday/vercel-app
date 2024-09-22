@@ -7,6 +7,7 @@ namespace MyVendor\MyProject;
 use BEAR\Package\Injector as PackageInjector;
 use Ray\Di\AbstractModule;
 use Ray\Di\InjectorInterface;
+use Ray\PsrCacheModule\ApcuAdapter;
 
 use function dirname;
 
@@ -20,7 +21,11 @@ final class Injector
 
     public static function getInstance(string $context): InjectorInterface
     {
-        return PackageInjector::getInstance(__NAMESPACE__, $context, dirname(__DIR__));
+        if ($context !== 'vercel') {
+            return PackageInjector::getInstance(__NAMESPACE__, $context, dirname(__DIR__));
+        }
+
+        return \BEAR\Package\Injector\PackageInjector::getInstance(new VercelMeta(), 'prod-app', new ApcuAdapter());
     }
 
     public static function getOverrideInstance(string $context, AbstractModule $overrideModule): InjectorInterface

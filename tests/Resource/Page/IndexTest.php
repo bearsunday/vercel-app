@@ -6,6 +6,7 @@ namespace MyVendor\MyProject\Resource\Page;
 
 use BEAR\Resource\ResourceInterface;
 use MyVendor\MyProject\Injector;
+use MyVendor\MyProject\Resource\Page\Api\Index;
 use PHPUnit\Framework\TestCase;
 
 use function assert;
